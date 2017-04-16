@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>The Mystery of the Missing Macguffin</title>
+        <script src="./decryptor.bundle.js"></script>
+        <style>
+            .crypted-text {
+                word-break: break-all;
+            }
+        </style>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1>Depositions</h1>
+        <div id="deps" class="container"></div>
+        <script>
+            function generateInnerHTML(index, content1, content2) {
+                return "<h2>Deposition #"+(index+1)+" - "+content1.character+"</h2><p class=\"crypted-text\">"+content1.deposition+"</p><p>"+content2+"</p><input type=\"text\" id=\"dep"+index+"input\" onkeydown=\"maybeDecrypt("+index+")\" /><button onclick=\"decryptDep("+index+")\">Decrypt</button>";
+            }
+            function maybeDecrypt(index) {
+                if (event.keyCode == 13) {
+                    decryptDep(index);
+                }
+            }
+            function decryptDep(index) {
+                var dep = window.depositions[index];
+                var decrypted = window.decryptDeposition(index, document.getElementById("dep"+index+"input").value);
+                document.getElementById("dep"+index).innerHTML = generateInnerHTML(index, dep, decrypted);
+            }
+            window.onload = function() {
+                var container = document.getElementById("deps");
+                window.depositions.forEach(function(child, index){
+                    var newChild = document.createElement("div");
+                    newChild.id = ("dep"+index);
+                    newChild.innerHTML = generateInnerHTML(index, child, "");
+                    container.appendChild(newChild);
+                });
+            }
+        </script>
+    </body>
+</html>
