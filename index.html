@@ -20,6 +20,7 @@
     <body>
         <h1>Depositions</h1>
         <div id="deps" class="container"></div>
+        <footer>Other documents on this domain are unrelated to this one</footer>
         <script>
             function generateInnerHTML(index, content1, content2) {
                 return "<h2>Deposition #"+(index+1)+" - "+content1.character+"</h2><p class=\"crypted-text\">"+content1.deposition+"</p><p>"+content2+"</p><input type=\"text\" id=\"dep"+index+"input\" onkeydown=\"maybeDecrypt("+index+")\" /><button onclick=\"decryptDep("+index+")\">Decrypt</button>";
