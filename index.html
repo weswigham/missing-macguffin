@@ -20,7 +20,11 @@
     <body>
         <h1>Depositions</h1>
         <div id="deps" class="container"></div>
-        <footer>Other documents on this domain are unrelated to this one</footer>
+        <footer style="padding-top: 50px; padding-bottom: 50px; margin-top: 100px; color: #99979c; background-color: #2a2730; text-align: center;">
+            <div class="container">
+                <p>This domain hosts the static files associated with these depositions. Be kind.</p>
+            </div>
+        </footer>
         <script>
             function generateInnerHTML(index, content1, content2) {
                 return "<h2>Deposition #"+(index+1)+" - "+content1.character+"</h2><p class=\"crypted-text\">"+content1.deposition+"</p><p>"+content2+"</p><input type=\"text\" id=\"dep"+index+"input\" onkeydown=\"maybeDecrypt("+index+")\" /><button onclick=\"decryptDep("+index+")\">Decrypt</button>";
