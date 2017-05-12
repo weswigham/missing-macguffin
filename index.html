@@ -1,25 +1,81 @@
 <html>
     <head>
-        <title>The Mystery of the Missing Macguffin</title>
+        <title>The Case of the Missing Macguffin</title>
         <script src="./decryptor.bundle.js"></script>
         <style>
             .crypted-text {
                 word-break: break-all;
                 font-family: Courier New, Courier, monospace;
             }
+
+            .deposition .collapsed h2:before {
+                content: "\e080";
+            }
+            .deposition h2:before {
+                font-family: 'Glyphicons Halflings';
+                content: "\e114";
+                float: right;
+                color: grey;
+            }
+            .deposition a, .deposition a:hover, .deposition a:active, .deposition a:focus {
+                text-decoration: none;
+                color: inherit;
+            }
         </style>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
+        <!-- jQuery library -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1>Depositions</h1>
-        <div id="deps" class="container"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <ul class="nav nav-sidebar" style="padding-top: 60px;">
+                        <li><a href="./Ani-mixed-up.pdf">Ani-mixed-up</a></li>
+                        <li><a href="./Down to the Bedrock.pdf">Down to the Bedrock</a></li>
+                        <li><a href="./Dynamic Crypto.pdf">Dynamic Crypto</a></li>
+                        <li><a href="./Gotta Get Back.pdf">Gotta Get Back</a></li>
+                        <li><a href="./Guessing Game.pdf">Guessing Game</a></li>
+                        <li><a href="./Late Nights.pdf">Late Nights</a></li>
+                        <li><a href="./Royal Gendarmerie of Canada.pdf">Royal Gendarmerie of Canada</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h1>The Case of the Missing Macguffin</h1>
+                    <img style="float: right; padding: 50px;" src="./ACME.png"/>
+                    <p>
+                        Early last week, the well-known criminal Carmen Sandiego was spotted on Rochester Institute of Technology
+                        campus. Her appearance coincides with the disappearance of an item of great value to the academic
+                        administration, and they do not believe the two to be a coincidence.
+                    </p>
+                    <p>
+                        ACME Detective Agency has been hired to investigate the circumstances surrounding the loss, and determine
+                        just where the item has gone and, if possible, recover it. You, dear readers, are one of our most talented
+                        new recruits, and we are setting you to task on this job.
+                    <p>
+                    <p>
+                        Prior to your arrival on the scene, campus security took depositions from a number of eyewitnesses who claim
+                        to have seen Carmen that day. Hopefully by retracing her steps, we can determine just where on campus Carmen
+                        Sandiego was, and where she’s taken the missing item.
+                    </p>
+                    <p>
+                        That's the hope. Except there's been a complication: The computer system containing the depositions was
+                        compromised by V.I.L.E. agents and held ransom for the Mount Morris dam. It's a given that neither the campus
+                        administration nor ACME will negotiate with thieves and we can't just give a dam, so we trust that the UTF-8
+                        encoded depositions being mostly encrypted in AES-128-CBC won't cause any issues for ACME agents such as
+                        yourselves. Additionally, the intruders left behind a number of documents inside the computer system, which
+                        are provided via links in the sidebar to the left, and may prove useful in decrypting the ransomed depositions!
+                    </p>
+                    <h1>Depositions</h1>
+                    <div id="deps"></div>
+                </div>
+            </div>
+        </div>
         <footer style="padding-top: 50px; padding-bottom: 50px; margin-top: 100px; color: #99979c; background-color: #2a2730; text-align: center;">
             <div class="container">
                 <p>This domain hosts the static files associated with these depositions. Be kind.</p>
@@ -27,7 +83,7 @@
         </footer>
         <script>
             function generateInnerHTML(index, content1, content2) {
-                return "<h2>Deposition #"+(index+1)+" - "+content1.character+"</h2><p class=\"crypted-text\">"+content1.deposition+"</p><p>"+content2+"</p><input type=\"text\" id=\"dep"+index+"input\" onkeydown=\"maybeDecrypt("+index+")\" /><button onclick=\"decryptDep("+index+")\">Decrypt</button>";
+                return "<div class=\"deposition\"><a class=\"collapsed\" href=\"#"+content1.character+"\" role=\"button\" data-toggle=\"collapse\" expanded=\"false\"><h2>Deposition #"+(index+1)+" - "+content1.character+"</h2></a></div><div class=\"collapse\" id=\""+content1.character+"\"><div class=\"well\"><p class=\"crypted-text\">"+content1.deposition+"</p></div></div><p>"+content2+"</p><input type=\"text\" id=\"dep"+index+"input\" onkeydown=\"maybeDecrypt("+index+")\" /><button onclick=\"decryptDep("+index+")\">Decrypt</button>";
             }
             function maybeDecrypt(index) {
                 if (event.keyCode == 13) {
